@@ -18,8 +18,15 @@ jobs:
           echo "KERNEL_SOURCE_BRANCH=$(cat config.env | grep -w "KERNEL_SOURCE_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
           echo "KERNEL_CONFIG=$(cat config.env | grep -w "KERNEL_CONFIG" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
           echo "BUILD_ARGS=$(cat config.env | grep -w "BUILD_ARGS" | head -n 1 | cut -d ":" -f 2)" >> $GITHUB_ENV
-          sudo apt update -y ; sudo apt install default-jdk git-core gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev x11proto-core-dev libx11-dev libreadline6-dev libgl1-mesa-glx libgl1-mesa-dev python3 make sudo gcc g++ bc grep tofrodos python3-markdown libxml2-utils xsltproc zlib1g-dev libncurses5 python-is-python3 libc6-dev libtinfo5 ncurses-dev make python2 repo cpio kmod openssl libelf-dev pahole libssl-dev libelf-dev -y
-
+          sudo apt-get install -y git ccache automake flex lzop bison \
+          gperf build-essential zip curl zlib1g-dev zlib1g-dev:i386 \
+          g++-multilib python-networkx libxml2-utils bzip2 libbz2-dev \
+          libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush \
+          schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev \
+          pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl \
+          libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev \
+          x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip
+    
       - name: Pull toolchain
         run: |
           git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 aarch64-linux-android-4.9
