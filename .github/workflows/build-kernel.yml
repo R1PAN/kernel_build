@@ -1,4 +1,4 @@
-name: Build MikaKernel
+name: Build kernel 
 
 
 on:
@@ -18,6 +18,7 @@ jobs:
           echo "KERNEL_SOURCE_BRANCH=$(cat config.env | grep -w "KERNEL_SOURCE_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
           echo "KERNEL_CONFIG=$(cat config.env | grep -w "KERNEL_CONFIG" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
           echo "BUILD_ARGS=$(cat config.env | grep -w "BUILD_ARGS" | head -n 1 | cut -d ":" -f 2)" >> $GITHUB_ENV
+          sudo apt update -y ; sudo apt install default-jdk git-core gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev x11proto-core-dev libx11-dev libreadline6-dev libgl1-mesa-glx libgl1-mesa-dev python3 make sudo gcc g++ bc grep tofrodos python3-markdown libxml2-utils xsltproc zlib1g-dev libncurses5 python-is-python3 libc6-dev libtinfo5 ncurses-dev make python2 repo cpio kmod openssl libelf-dev pahole libssl-dev libelf-dev -y
 
       - name: Pull toolchain
         run: |
@@ -31,6 +32,7 @@ jobs:
 
       - name: Build kernel
         run: |
+          mkdir out
           export KBUILD_BUILD_USER="zclkkk"
           export KBUILD_BUILD_HOST="workspace"
           export PATH=$GITHUB_WORKSPACE/clang/bin:${PATH}
@@ -42,6 +44,7 @@ jobs:
                                   CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/arm-linux-androideabi-4.9/bin/arm-linux-androideabi- "
           mv r_defconfig kernel-source/arch/arm64/configs
           cd kernel-source
+          mkdir out
           rm -rf KernelSU
           git clone https://github.com/tiann/KernelSU.git
           wget http://patches.aircrack-ng.org/mac80211.compat08082009.wl_frag+ack_v1.patch
