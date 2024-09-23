@@ -43,8 +43,8 @@ jobs:
           #mv r_defconfig kernel-source/arch/arm64/configs
           cd kernel-source
           #mkdir out
-          #rm -rf KernelSU
-          #git clone https://github.com/tiann/KernelSU.git
+          rm -rf KernelSU
+          git clone https://github.com/tiann/KernelSU.git
           #wget http://patches.aircrack-ng.org/mac80211.compat08082009.wl_frag+ack_v1.patch
           #patch -p1 < mac80211.compat08082009.wl_frag+ack_v1.patch
           make ${args} ${{ env.KERNEL_CONFIG }}
